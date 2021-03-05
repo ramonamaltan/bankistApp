@@ -61,7 +61,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 const displayMovements = function(movements) {
   containerMovements.innerHTML = '';
-  
+
   movements.forEach(function(mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal'
 
@@ -75,4 +75,20 @@ const displayMovements = function(movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   })
 }
-displayMovements(account1.movements)
+displayMovements(account1.movements);
+
+
+// create usernames = owner initials lowercase
+const createUsernames = function(accs) {
+  accs.forEach(function(acc) {
+    acc.username = acc.owner
+    .toLowerCase()
+    .split(' ')
+    .map(word => word[0])
+    .join('')
+  })
+
+}
+createUsernames(accounts);
+// console.log(accounts);
+
