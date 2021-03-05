@@ -156,6 +156,18 @@ btnTransfer.addEventListener('click', (event) => {
   inputTransferAmount.blur();
 })
 
+// request loan functionality
+btnLoan.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+})
+
 // close Account functionality
 btnClose.addEventListener('click', (event) => {
   event.preventDefault();
