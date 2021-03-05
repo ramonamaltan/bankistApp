@@ -116,7 +116,7 @@ const createUsernames = function(accs) {
 }
 createUsernames(accounts);
 
-// login feature
+// login functionality
 let currentAccount;
 const updateUI = function(acc) {
   displayMovements(acc.movements);
@@ -140,7 +140,7 @@ btnLogin.addEventListener('click', (event) => {
   }
 })
 
-// transfer money
+// transfer money functionality
 btnTransfer.addEventListener('click', (event) => {
   event.preventDefault();
 
@@ -154,4 +154,15 @@ btnTransfer.addEventListener('click', (event) => {
   }
   inputTransferAmount.value = inputTransferTo.value = '';
   inputTransferAmount.blur();
+})
+
+// close Account functionality
+btnClose.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  if (currentAccount.username === inputCloseUsername.value && currentAccount.pin === Number(inputClosePin.value)) {
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username);
+    accounts.splice(index, 1);
+    containerApp.style.opacity = 0;
+  }
 })
