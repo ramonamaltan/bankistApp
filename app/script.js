@@ -59,10 +59,13 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function(movements) {
+const displayMovements = function(movements, sort = false) {
+  // display movements and sorting
   containerMovements.innerHTML = '';
 
-  movements.forEach(function(mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements
+
+  movs.forEach(function(mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal'
 
     const html = `
@@ -75,13 +78,19 @@ const displayMovements = function(movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   })
 }
-// displayMovements(account1.movements);
+
+let sorted = false;
+btnSort.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+})
 
 const calcDisplayBalance = function(acc) {
   acc.balance = acc.movements.reduce((accum, mov) => accum + mov, 0);
   labelBalance.textContent = `${acc.balance} €`;
 }
-// calcDisplayBalance(account1);
 
 const calcDisplaySummary = function(acc) {
   const incomes = acc.movements
@@ -101,7 +110,6 @@ const calcDisplaySummary = function(acc) {
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${interest}€`;
 }
-// calcDisplaySummary(account1.movements);
 
 // create usernames = owner initials lowercase
 const createUsernames = function(accs) {
@@ -178,3 +186,9 @@ btnClose.addEventListener('click', (event) => {
     containerApp.style.opacity = 0;
   }
 })
+
+// const overallBalance = accounts.map(acc => acc.movements).flat().reduce((acc, mov) => acc + mov, 0);
+// console.log(overallBalance);
+
+const overallBalance = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
