@@ -49,12 +49,21 @@ btnScrollTo.addEventListener('click', function(e) {
 })
 
 //////////////////////// Page Navigation //////////////////////
-document.querySelectorAll('.nav__link').forEach(function(el) {
-  el.addEventListener('click', (e) => {
-    e.preventDefault();
-    const id = el.getAttribute('href');
+// document.querySelectorAll('.nav__link').forEach(function(el) {
+//   el.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     const id = el.getAttribute('href');
+//     document.querySelector(id).scrollIntoView({behavior: 'smooth'});
+//   })
+// })
+
+// add event listener to common parent element and determine what element originated the event
+document.querySelector('.nav__links').addEventListener('click', function(e) {
+  e.preventDefault();
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
     document.querySelector(id).scrollIntoView({behavior: 'smooth'});
-  })
+  }
 })
 
 ///////////////////////////////////////////////////////////////
