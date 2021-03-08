@@ -83,10 +83,52 @@ const handleHover = function(e) {
     logo.style.opacity = this;
   }
 }
-
+// passing 'argument' into handler function
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
 
+/////////////////// Sticky Navigation /////////////////////
+const initialCoords = section1.getBoundingClientRect();
+
+// window.addEventListener('scroll', function() {
+//   console.log(window.scrollY);
+
+//   if (window.scrollY > initialCoords.top) {
+//     nav.classList.add('sticky')
+//   } else {
+//     nav.classList.remove('sticky')
+//   }
+// })
+
+///////// Sticky Navigation: Observer API //////////////
+// const obsCallback = function(entries, observer) {
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   })
+// }
+
+// const obsOptions = {
+//   root: null,
+//   threshold: [0, 0.2],
+// }
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+
+const stickyNav = function(entries) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+}
+
+const header = document.querySelector('.header');
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: '-90px',
+});
+headerObserver.observe(header);
 
 /////////////////// Tabbed Component //////////////////////////
 tabsContainer.addEventListener('click', function(e) {
@@ -103,80 +145,80 @@ tabsContainer.addEventListener('click', function(e) {
 })
 
 ///////////////////////////////////////////////////////////////
-// NodeList
-const allSections = document.querySelectorAll('.section');
-console.log(allSections);
-// HTMLCollection (updates dynamically)
-const allButtons = document.getElementsByTagName('button');
-const allButtons2 = document.getElementsByClassName('btn');
-console.log(allButtons);
+// // NodeList
+// const allSections = document.querySelectorAll('.section');
+// console.log(allSections);
+// // HTMLCollection (updates dynamically)
+// const allButtons = document.getElementsByTagName('button');
+// const allButtons2 = document.getElementsByClassName('btn');
+// console.log(allButtons);
 
-// create cookie banner
-const message = document.createElement('div');
-message.classList.add('cookie-message');
-// message.textContent = 'We use cookies for improved functionality and analytics';
-message.innerHTML = 'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>'
+// // create cookie banner
+// const message = document.createElement('div');
+// message.classList.add('cookie-message');
+// // message.textContent = 'We use cookies for improved functionality and analytics';
+// message.innerHTML = 'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>'
 
-const header = document.querySelector('.header');
-// header.prepend(message);
-// header.append(message);
-header.before(message);
-// header.after(message);
+// const header = document.querySelector('.header');
+// // header.prepend(message);
+// // header.append(message);
+// header.before(message);
+// // header.after(message);
 
-// delete elements
-document
-  .querySelector('.btn--close-cookie')
-  .addEventListener('click', function() {
-    message.remove();
-    // message.parentElement.removeChild.message();
-  })
+// // delete elements
+// document
+//   .querySelector('.btn--close-cookie')
+//   .addEventListener('click', function() {
+//     message.remove();
+//     // message.parentElement.removeChild.message();
+//   })
 
-  // Style
-  message.style.backgroundColor = '#37383d';
-  message.style.width = '120%';
+//   // Style
+//   message.style.backgroundColor = '#37383d';
+//   message.style.width = '120%';
 
-  console.log(getComputedStyle(message).height);
-  message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 20 + 'px';
+//   console.log(getComputedStyle(message).height);
+//   message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 20 + 'px';
 
-  // document.documentElement.style.setProperty('--color-primary', 'orange');
+//   // document.documentElement.style.setProperty('--color-primary', 'orange');
 
-  // Attributes
-  const logo = document.querySelector('.nav__logo');
-  console.log(logo.alt);
+//   // Attributes
+//   const logo = document.querySelector('.nav__logo');
+//   console.log(logo.alt);
 
-  console.log(logo.src); //http://localhost:8080/app/home/img/logo.png
-  console.log(logo.getAttribute('src')); //img/logo.png
+//   console.log(logo.src); //http://localhost:8080/app/home/img/logo.png
+//   console.log(logo.getAttribute('src')); //img/logo.png
 
-  const link = document.querySelector('.nav__link--btn');
-  console.log(link.href); // http://localhost:8080/app/home/#
-  console.log(link.getAttribute('href')); // #
+//   const link = document.querySelector('.nav__link--btn');
+//   console.log(link.href); // http://localhost:8080/app/home/#
+//   console.log(link.getAttribute('href')); // #
 
-// Data attributes
-console.log(logo.dataset.versionNumber);
+// // Data attributes
+// console.log(logo.dataset.versionNumber);
 
-// Classes
-// logo.classList.add();
-// logo.classList.remove();
-// logo.classList.toggle();
-// logo.classList.contains();
+// // Classes
+// // logo.classList.add();
+// // logo.classList.remove();
+// // logo.classList.toggle();
+// // logo.classList.contains();
 
-const h1 = document.querySelector('h1');
+// const h1 = document.querySelector('h1');
 
-// Going downwards: child
-console.log(h1.querySelectorAll('.highlight'));
-console.log(h1.childNodes);
-console.log(h1.children);
-h1.firstElementChild.style.color = 'white';
+// // Going downwards: child
+// console.log(h1.querySelectorAll('.highlight'));
+// console.log(h1.childNodes);
+// console.log(h1.children);
+// h1.firstElementChild.style.color = 'white';
 
-// Going upwards: parents
-console.log(h1.parentNode);
-console.log(h1.parentElement);
+// // Going upwards: parents
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
 
-// h1.closest('.header').style.background = 'var(--gradient-secondary)';
+// // h1.closest('.header').style.background = 'var(--gradient-secondary)';
 
-// Going sideways: siblings
-console.log(h1.previousElementSibling);
-console.log(h1.nextElementSibling);
-console.log(h1.previousSibling);
-console.log(h1.nextSibling);
+// // Going sideways: siblings
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+// console.log(h1.previousSibling);
+// console.log(h1.nextSibling);
 
