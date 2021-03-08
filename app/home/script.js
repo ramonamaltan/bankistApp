@@ -1,13 +1,14 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
+
+///////////// Modal window ///////////////////////////////////////
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -30,9 +31,6 @@ document.addEventListener('keydown', function (e) {
 });
 
 ////////////// IMPLEMENT SMOOTH SCROLLING //////////////////////
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
-
 btnScrollTo.addEventListener('click', function(e) {
   const s1coords = section1.getBoundingClientRect();
   // window.scrollTo(
@@ -47,7 +45,16 @@ btnScrollTo.addEventListener('click', function(e) {
   // })
 
   // for modern browsers there's an easy way
-  section1.scrollIntoView({behavior: 'smooth'});
+  section1.scrollIntoView({ behavior: 'smooth' });
+})
+
+//////////////////////// Page Navigation //////////////////////
+document.querySelectorAll('.nav__link').forEach(function(el) {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    const id = el.getAttribute('href');
+    document.querySelector(id).scrollIntoView({behavior: 'smooth'});
+  })
 })
 
 ///////////////////////////////////////////////////////////////
