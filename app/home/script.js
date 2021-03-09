@@ -89,7 +89,7 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 
 /////////////////// Sticky Navigation /////////////////////
 const initialCoords = section1.getBoundingClientRect();
-
+// use scroll event -> don't do it anymore
 // window.addEventListener('scroll', function() {
 //   console.log(window.scrollY);
 
